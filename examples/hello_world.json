@@ -1,7 +1,11 @@
 {
   "html": {
     "head": {
-      "title": "yes"
+      "title": "yes",
+      "script": {
+        "src": "https://code.jquery.com/jquery-3.7.0.slim.min.js",
+        "crossorigin": "anonymous"
+      }
     },
     "body": {
       "h1": {
@@ -9,6 +13,7 @@
         "class": "title"
       },
       "div": {
+        "title": "test",
         "class": "container",
         "h1": {
           "id": "memes",

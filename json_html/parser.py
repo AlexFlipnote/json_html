@@ -3,6 +3,8 @@ import json
 
 from bs4 import BeautifulSoup
 
+from .lists import elements
+
 __all__ = (
     "JSONHTML",
 )
@@ -14,18 +16,8 @@ class JSONHTML:
             raise TypeError("data must be a dict")
 
         self._data = data
+        self._location = None
         self.re_space = re.compile(r"^\s+")
-
-        self._elements = [
-            "html", "head", "body", "title",
-            "h1", "h2", "h3", "h4", "h5", "h6",
-            "div", "span", "p", "a", "img",
-            "ul", "ol", "li", "table", "tr"
-        ]
-
-        self._attrs = [
-            "id", "class", "style", "src", "href", "alt", "content"
-        ]
 
     @classmethod
     def from_file(cls, filename: str) -> "JSONHTML":
@@ -46,7 +38,7 @@ class JSONHTML:
         content = data.get("content", "")
 
         for k, v in data.items():
-            if k != "content" and k not in self._elements:
+            if k != "content" and k not in elements:
                 attrs.append(f'{k}="{v}"')
 
         attrs_str = " ".join(attrs)
@@ -62,15 +54,21 @@ class JSONHTML:
         data: dict = data or self._data
 
         for k, v in data.items():
+            if k in ["head", "body"]:
+                self._location = k
+
             if isinstance(v, dict):
-                if k in self._attrs:
+                if k == "title" and self._location == "body":
                     continue
-                if k in self._elements:
+
+                if k in elements:
                     html += self.element(k, v)
                     html += self.render(v)
                     html += f"</{k}>"
             else:
-                if k in self._attrs:
+                if k not in elements:
+                    continue
+                if k == "title" and self._location == "body":
                     continue
                 html += self.element(k, {"content": str(v)})
 
