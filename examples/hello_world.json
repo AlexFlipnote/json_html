@@ -1,0 +1,21 @@
+{
+  "html": {
+    "head": {
+      "title": "yes"
+    },
+    "body": {
+      "h1": {
+        "content": "Hello world",
+        "class": "title"
+      },
+      "div": {
+        "class": "container",
+        "h1": {
+          "id": "memes",
+          "class": "title",
+          "content": "Hello world again"
+        }
+      }
+    }
+  }
+}
