@@ -56,20 +56,14 @@ class JSONHTML:
         for k, v in data.items():
             if k in ["head", "body"]:
                 self._location = k
+            if k not in elements:
+                continue
 
             if isinstance(v, dict):
-                if k == "title" and self._location == "body":
-                    continue
-
-                if k in elements:
-                    html += self.element(k, v)
-                    html += self.render(v)
-                    html += f"</{k}>"
-
+                html += self.element(k, v)
+                html += self.render(v)
+                html += f"</{k}>"
             elif isinstance(v, str):
-                if k not in elements:
-                    continue
-
                 html += self.element(k, {"content": str(v)})
                 html += f"</{k}>"
 
