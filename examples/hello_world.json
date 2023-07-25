@@ -13,7 +13,6 @@
         "class": "title"
       },
       "div": {
-        "title": "test",
         "class": "container",
         "h1": {
           "id": "memes",

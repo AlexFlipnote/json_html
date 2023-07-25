@@ -1,6 +1,5 @@
 upload:
 	@echo Uploading to PyPi...
-	python setup.py install
 	python setup.py sdist
 	twine upload dist/*
 	@echo Done!

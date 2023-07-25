@@ -50,7 +50,7 @@ class JSONHTML:
 
     def render(self, data: dict = None) -> str:
         """ Returns a HTML string """
-        html = ""
+        html: str = ""
         data: dict = data or self._data
 
         for k, v in data.items():
@@ -65,12 +65,13 @@ class JSONHTML:
                     html += self.element(k, v)
                     html += self.render(v)
                     html += f"</{k}>"
-            else:
+
+            elif isinstance(v, str):
                 if k not in elements:
                     continue
-                if k == "title" and self._location == "body":
-                    continue
+
                 html += self.element(k, {"content": str(v)})
+                html += f"</{k}>"
 
         return html
 
